@@ -5,34 +5,38 @@ import {Snowflake} from "@/classes/Snowflake";
 import {Utils} from "@/classes/Utils";
 
 const canvas = ref<HTMLCanvasElement>()
-const ctx = ref<CanvasRenderingContext2D>()
+const ctx = ref<CanvasRenderingContext2D|null>()
 const options = ref({
     maxFlakes: 4000,
 })
 
-const flakes = [];
+const flakes: Snowflake[] = [];
 
 const drawSnowflake = (flake: Snowflake) => {
-    ctx.value.save()
-    ctx.value.globalAlpha = flake.opacity
-    ctx.value.shadowColor = "#cfd1d2"
-    ctx.value.shadowBlur = flake.blur;
-    ctx.value.beginPath();
-    ctx.value.arc(flake.coordinates.x, flake.coordinates.y, flake.radius, 0, Math.PI * 2);
-    ctx.value.fillStyle = "#cfd1d2";
-    ctx.value.fill();
-    ctx.value.closePath();
-    ctx.value.shadowBlur = 0;
-    ctx.value.restore()
+    if (ctx.value) {
+        ctx.value.save()
+        ctx.value.globalAlpha = flake.opacity
+        ctx.value.shadowColor = "#cfd1d2"
+        ctx.value.shadowBlur = flake.blur;
+        ctx.value.beginPath();
+        ctx.value.arc(flake.coordinates.x, flake.coordinates.y, flake.radius, 0, Math.PI * 2);
+        ctx.value.fillStyle = "#cfd1d2";
+        ctx.value.fill();
+        ctx.value.closePath();
+        ctx.value.shadowBlur = 0;
+        ctx.value.restore()
+    }
 }
 
 const animate = () => {
-    ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
-    ctx.value.beginPath();
-    ctx.value.rect(0, 0, canvas.value.width, canvas.value.height);
-    ctx.value.fillStyle = "black"
-    ctx.value.fill()
-    ctx.value.closePath()
+    if (ctx.value && canvas.value) {
+        ctx.value.clearRect(0, 0, canvas.value.width, canvas.value.height);
+        ctx.value.beginPath();
+        ctx.value.rect(0, 0, canvas.value.width, canvas.value.height);
+        ctx.value.fillStyle = "black"
+        ctx.value.fill()
+        ctx.value.closePath()
+    }
 
     for (const flake of flakes) {
         flake.update()
@@ -57,12 +61,14 @@ onMounted(() => {
         }
 
         animate()
+    }
 
-        window.addEventListener("resize", () => {
+    window.addEventListener("resize", () => {
+        if (canvas.value) {
             canvas.value.width = window.innerWidth;
             canvas.value.height = window.innerHeight;
-        })
-    }
+        }
+    })
 })
 
 onBeforeUnmount(() => {

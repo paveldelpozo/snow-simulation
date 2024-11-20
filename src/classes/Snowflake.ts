@@ -10,7 +10,7 @@ export class Snowflake {
     blur: number
     opacity: number
 
-    constructor(canvas, x, y, radius, speed) {
+    constructor(canvas: HTMLCanvasElement, x: number, y: number, radius: number, speed: number) {
         this.canvas = canvas
         this.coordinates = {
             x,
