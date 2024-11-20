@@ -51,8 +51,8 @@ onMounted(() => {
         for (let i = 0; i < options.value.maxFlakes; i++) {
             const x = Utils.random(0, canvas.value.width)
             const y = Utils.random(0, canvas.value.height)
-            const radius = Utils.random(0, 5)
-            const speed = Utils.random(0.5, 2.5)
+            const radius = Utils.random(0, 3)
+            const speed = Utils.random(0.5, 4.5)
             flakes.push(new Snowflake(canvas.value, x, y, radius, speed));
         }
 

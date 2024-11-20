@@ -20,7 +20,7 @@ export class Snowflake {
         this.speed = speed
         this.wind = Utils.random(-1, 1)
         this.blur = radius * 20//Utils.random(1, 10)
-        this.opacity = radius / 5
+        this.opacity = radius / 3
     }
 
     update() {
