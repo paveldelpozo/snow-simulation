@@ -79,7 +79,7 @@ onBeforeUnmount(() => {
 <template>
     <canvas ref="canvas"></canvas>
 
-    <git-hub color="#1D1D1D" url="https://github.com/paveldelpozo/particles" />
+    <git-hub color="#1D1D1D" url="https://github.com/paveldelpozo/snow-simulation" />
 </template>
 
 <style>
